@@ -104,6 +104,7 @@ longer available when using alpha configuration:
 - `validate-url`/`validate_url`
 - `scope`
 - `response-type`/`response_type`
+- `response-mode`/`response_mode`
 - `prompt`
 - `approval-prompt`/`approval_prompt`
 - `acr-values`/`acr_values`
@@ -420,6 +421,7 @@ Provider holds all configuration for a single provider
 | `validateURL` | _string_ | ValidateURL is the access token validation endpoint |
 | `scope` | _string_ | Scope is the OAuth scope specification |
 | `responseType` | _string_ | ResponseType tells the authorization server which grant to execute |
+| `responseMode` | _string_ | ResponseMode tells the authorization server how to attach the response code to the callback |
 | `allowedGroups` | _[]string_ | AllowedGroups is a list of restrict logins to members of this group |
 | `force_code_challenge_method` | _string_ | The forced code challenge method |
 

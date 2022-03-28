@@ -41,6 +41,9 @@ func makeLoginURL(p *ProviderData, redirectURI, state string, extraParams url.Va
 	params.Add("scope", p.Scope)
 	params.Set("client_id", p.ClientID)
 	params.Set("response_type", getResponseType(p))
+	if p.ResponseMode != "" {
+		params.Set("response_mode", p.ResponseMode)
+	}
 	params.Add("state", state)
 	for n, p := range extraParams {
 		for _, v := range p {

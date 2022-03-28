@@ -76,6 +76,8 @@ type Provider struct {
 	Scope string `json:"scope,omitempty"`
 	// ResponseType tells the authorization server which grant to execute
 	ResponseType string `json:"responseType,omitempty"`
+	// ResponseMode tells the authorization server how to attach code to callback
+	ResponseMode string `json:"responseMode,omitempty"`
 	// AllowedGroups is a list of restrict logins to members of this group
 	AllowedGroups []string `json:"allowedGroups,omitempty"`
 	// The forced code challenge method

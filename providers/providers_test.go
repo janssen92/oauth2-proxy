@@ -217,6 +217,50 @@ func TestResponseType(t *testing.T) {
 	}
 }
 
+func TestResponseMode(t *testing.T) {
+	g := NewWithT(t)
+
+	testCases := []struct {
+		name                   string
+		configuredResponseMode string
+		expectedResponseMode   string
+		allowedGroups          []string
+	}{
+		{
+			name:                   "with no ResponseMode provided",
+			configuredResponseMode: "",
+			expectedResponseMode:   "",
+		},
+		{
+			name:                   "with a configured ResponseMode provided",
+			configuredResponseMode: "form_post",
+			expectedResponseMode:   "form_post",
+		},
+	}
+
+	for _, tc := range testCases {
+		providerConfig := options.Provider{
+			ID:               providerID,
+			Type:             "oidc",
+			ClientID:         clientID,
+			ClientSecretFile: clientSecret,
+			LoginURL:         msAuthURL,
+			RedeemURL:        msTokenURL,
+			ResponseMode:     tc.configuredResponseMode,
+			AllowedGroups:    tc.allowedGroups,
+			OIDCConfig: options.OIDCOptions{
+				IssuerURL:     msIssuerURL,
+				SkipDiscovery: true,
+				JwksURL:       msKeysURL,
+			},
+		}
+
+		pd, err := newProviderDataFromConfig(providerConfig)
+		g.Expect(err).ToNot(HaveOccurred())
+
+		g.Expect(pd.ResponseMode).To(Equal(tc.expectedResponseMode))
+	}
+}
 func TestForcedMethodS256(t *testing.T) {
 	g := NewWithT(t)
 	options := options.NewOptions()

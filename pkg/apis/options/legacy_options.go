@@ -510,6 +510,7 @@ type LegacyProvider struct {
 	ValidateURL                        string   `flag:"validate-url" cfg:"validate_url"`
 	Scope                              string   `flag:"scope" cfg:"scope"`
 	ResponseType                       string   `flag:"response-type" cfg:"response_type"`
+	ResponseMode                       string   `flag:"response-mode" cfg:"response_mode"`
 	Prompt                             string   `flag:"prompt" cfg:"prompt"`
 	ApprovalPrompt                     string   `flag:"approval-prompt" cfg:"approval_prompt"` // Deprecated by OIDC 1.0
 	UserIDClaim                        string   `flag:"user-id-claim" cfg:"user_id_claim"`
@@ -565,6 +566,7 @@ func legacyProviderFlagSet() *pflag.FlagSet {
 	flagSet.String("validate-url", "", "Access token validation endpoint")
 	flagSet.String("scope", "", "OAuth scope specification")
 	flagSet.String("response-type", "", "OAuth response_type parameter in authorization request")
+	flagSet.String("response-mode", "", "ResponseMode tells the authorization server how to attach the response code to the callback")
 	flagSet.String("prompt", "", "OIDC prompt")
 	flagSet.String("approval-prompt", "force", "OAuth approval_prompt")
 	flagSet.String("code-challenge-method", "", "use PKCE code challenges with the specified method. Either 'plain' or 'S256'")
@@ -640,6 +642,7 @@ func (l *LegacyProvider) convert() (Providers, error) {
 		AllowedGroups:       l.AllowedGroups,
 		CodeChallengeMethod: l.CodeChallengeMethod,
 		ResponseType:        l.ResponseType,
+		ResponseMode:        l.ResponseMode,
 	}
 
 	// This part is out of the switch section for all providers that support OIDC

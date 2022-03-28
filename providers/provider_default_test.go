@@ -130,6 +130,52 @@ func TestResponseTypeDefaultIsConfigured(t *testing.T) {
 	assert.Contains(t, result, "response_type=othertype")
 }
 
+func TestResponseModeIsEmpty(t *testing.T) {
+	p := &ProviderData{
+		LoginURL: &url.URL{
+			Scheme: "http",
+			Host:   "my.test.idp",
+			Path:   "/oauth/authorize",
+		},
+	}
+
+	result := p.GetLoginURL("https://my.test.app/oauth", "", "", url.Values{})
+	assert.NotContains(t, result, "response_mode")
+}
+
+func TestResponseModeIsSet(t *testing.T) {
+	p := &ProviderData{
+		LoginURL: &url.URL{
+			Scheme: "http",
+			Host:   "my.test.idp",
+			Path:   "/oauth/authorize",
+		},
+		ResponseMode: "form_post",
+	}
+	p.setProviderDefaults(providerDefaults{
+		responseMode: "other_mode",
+	})
+
+	result := p.GetLoginURL("https://my.test.app/oauth", "", "", url.Values{})
+	assert.Contains(t, result, "response_mode=form_post")
+}
+
+func TestResponseModeIsSetByDefault(t *testing.T) {
+	p := &ProviderData{
+		LoginURL: &url.URL{
+			Scheme: "http",
+			Host:   "my.test.idp",
+			Path:   "/oauth/authorize",
+		},
+	}
+	p.setProviderDefaults(providerDefaults{
+		responseMode: "form_post",
+	})
+
+	result := p.GetLoginURL("https://my.test.app/oauth", "", "", url.Values{})
+	assert.Contains(t, result, "response_mode=form_post")
+}
+
 func TestProviderDataAuthorize(t *testing.T) {
 	testCases := []struct {
 		name          string

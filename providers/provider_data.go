@@ -38,6 +38,7 @@ type ProviderData struct {
 	ClientSecretFile  string
 	Scope             string
 	ResponseType      string
+	ResponseMode      string
 	// The picked CodeChallenge Method or empty if none.
 	CodeChallengeMethod string
 	// Code challenge methods supported by the Provider
@@ -187,6 +188,7 @@ type providerDefaults struct {
 	validateURL  *url.URL
 	scope        string
 	responseType string
+	responseMode string
 }
 
 func (p *ProviderData) setProviderDefaults(defaults providerDefaults) {
@@ -198,6 +200,10 @@ func (p *ProviderData) setProviderDefaults(defaults providerDefaults) {
 
 	if p.ResponseType == "" {
 		p.ResponseType = defaults.responseType
+	}
+
+	if p.ResponseMode == "" {
+		p.ResponseMode = defaults.responseMode
 	}
 
 	if p.Scope == "" {
